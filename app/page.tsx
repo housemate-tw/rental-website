@@ -16,24 +16,28 @@ export default function Home() {
 
   // 載入真實資料
   useEffect(() => {
-    // 動態獲取 basePath - 在開發環境下為空，在 GitHub Pages 下為 /rental-website
-    const basePath = typeof window !== 'undefined' && window.location.pathname.includes('/rental-website')
-      ? '/rental-website'
-      : '';
+    // 使用環境變數中的 basePath，fallback 到空字串
+    const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
     const dataPath = `${basePath}/data/rentals.json`;
+
+    console.log('嘗試載入資料從:', dataPath);
+    console.log('basePath:', basePath);
+    console.log('當前 URL:', window.location.href);
 
     fetch(dataPath)
       .then(res => {
+        console.log('Fetch response status:', res.status);
         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
         return res.json();
       })
       .then(data => {
-        console.log('資料載入成功:', data);
+        console.log('資料載入成功，物件數量:', data.length);
         setRentals(data);
         setLoading(false);
       })
       .catch(error => {
         console.error('載入資料失敗:', error);
+        console.error('錯誤詳情:', error.message);
         setLoading(false);
       });
   }, []);
