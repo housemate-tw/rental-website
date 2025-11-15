@@ -16,7 +16,8 @@ export default function Home() {
 
   // 載入真實資料
   useEffect(() => {
-    fetch('/data/rentals.json')
+    const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
+    fetch(`${basePath}/data/rentals.json`)
       .then(res => res.json())
       .then(data => {
         setRentals(data);
