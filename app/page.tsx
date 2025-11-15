@@ -16,10 +16,19 @@ export default function Home() {
 
   // 載入真實資料
   useEffect(() => {
-    const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
-    fetch(`${basePath}/data/rentals.json`)
-      .then(res => res.json())
+    // 動態獲取 basePath - 在開發環境下為空，在 GitHub Pages 下為 /rental-website
+    const basePath = typeof window !== 'undefined' && window.location.pathname.includes('/rental-website')
+      ? '/rental-website'
+      : '';
+    const dataPath = `${basePath}/data/rentals.json`;
+
+    fetch(dataPath)
+      .then(res => {
+        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+        return res.json();
+      })
       .then(data => {
+        console.log('資料載入成功:', data);
         setRentals(data);
         setLoading(false);
       })
