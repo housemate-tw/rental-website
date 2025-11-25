@@ -1,6 +1,8 @@
 import { Inter } from 'next/font/google';
 import RentalItem from '@/components/RentalItem';
-import { Clock } from 'lucide-react'; // Import Clock icon
+import { Clock } from 'lucide-react';
+import fs from 'fs';
+import path from 'path';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -16,25 +18,49 @@ interface Rental {
   processed_time: string;
   version: string;
   validation_issues: string[] | null;
-  url?: string; // Optional URL field
+  url?: string;
+}
+
+async function getRentals(): Promise<Rental[]> {
+  const dataDir = '/Users/sabrina/Documents/data_v8';
+  const allRentals: Rental[] = [];
+
+  try {
+    const filenames = fs.readdirSync(dataDir);
+    const jsonlFiles = filenames.filter(file => file.endsWith('.jsonl'));
+
+    for (const fileName of jsonlFiles) {
+      const filePath = path.join(dataDir, fileName);
+      const fileContent = fs.readFileSync(filePath, 'utf-8');
+      const lines = fileContent.split('\n');
+
+      for (const line of lines) {
+        if (line.trim() !== '') {
+          try {
+            allRentals.push(JSON.parse(line));
+          } catch (e) {
+            console.error(`Error parsing JSON from ${fileName}:`, e);
+          }
+        }
+      }
+    }
+
+    allRentals.sort((a, b) => {
+      const dateA = new Date(`${a.processed_date}T${a.processed_time}`);
+      const dateB = new Date(`${b.processed_date}T${b.processed_time}`);
+      return dateB.getTime() - dateA.getTime();
+    });
+
+    return allRentals;
+  } catch (error) {
+    console.error('Error reading rental data:', error);
+    return [];
+  }
 }
 
 export default async function Home() {
-  let rentals: Rental[] = [];
-  let error: string | null = null;
-
-  try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/rentals`, {
-      cache: 'no-store',
-    });
-    if (!res.ok) {
-      throw new Error(`Failed to fetch rentals: ${res.status} ${res.statusText}`);
-    }
-    rentals = await res.json();
-  } catch (e: any) {
-    console.error('Error fetching rentals:', e);
-    error = e.message || 'An unknown error occurred';
-  }
+  const rentals = await getRentals();
+  const error = rentals.length === 0 ? '無法載入租屋資料' : null;
 
   return (
     <main className={`flex min-h-screen flex-col items-start p-6 ${inter.className}`}>

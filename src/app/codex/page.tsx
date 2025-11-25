@@ -1,23 +1,45 @@
 import RentalItemCodex from '@/components/RentalItemCodex';
-import { CodexRental } from '@/lib/codexRentalMapper';
+import { CodexRental, mapCodexRental, sortCodexRentals } from '@/lib/codexRentalMapper';
+import fs from 'fs';
+import path from 'path';
 
-export default async function CodexPage() {
-  let rentals: CodexRental[] = [];
-  let error: string | null = null;
+async function getCodexRentals(): Promise<CodexRental[]> {
+  const dataDir = '/Users/sabrina/Documents/rental_scraper_MAIN/data/processed';
+  const rentals: CodexRental[] = [];
 
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
-    const res = await fetch(`${baseUrl}/api/rentals-codex`, {
-      cache: 'no-store',
-    });
-    if (!res.ok) {
-      throw new Error(`Failed to fetch rentals: ${res.status} ${res.statusText}`);
+    const filenames = fs.readdirSync(dataDir);
+    const jsonlFiles = filenames.filter(
+      (file) => file.startsWith('structured_') && file.endsWith('.jsonl'),
+    );
+
+    for (const fileName of jsonlFiles) {
+      const filePath = path.join(dataDir, fileName);
+      const fileContent = fs.readFileSync(filePath, 'utf-8');
+      const lines = fileContent.split('\n');
+
+      for (const line of lines) {
+        if (!line.trim()) continue;
+        try {
+          const parsed = JSON.parse(line);
+          rentals.push(mapCodexRental(parsed));
+        } catch (e) {
+          console.error(`Error parsing ${fileName}:`, e);
+        }
+      }
     }
-    rentals = await res.json();
-  } catch (e: any) {
-    console.error('codex page fetch error:', e);
-    error = e.message || 'Unknown error';
+
+    rentals.sort(sortCodexRentals);
+    return rentals;
+  } catch (error) {
+    console.error('Error reading codex rentals:', error);
+    return [];
   }
+}
+
+export default async function CodexPage() {
+  const rentals = await getCodexRentals();
+  const error = rentals.length === 0 ? '無法載入租屋資料' : null;
 
   return (
     <main className="flex min-h-screen flex-col items-start p-6">
