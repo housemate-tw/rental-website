@@ -1,0 +1,13 @@
+# Claude Scraper Dependencies
+
+# Browser automation
+playwright==1.40.0
+
+# Configuration
+python-dotenv==1.0.0
+
+# Progress bar
+tqdm==4.66.1
+
+# Note: After installing, run:
+# playwright install chromium

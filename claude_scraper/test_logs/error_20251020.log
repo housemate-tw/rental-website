@@ -1,0 +1,6 @@
+[2025-10-20 20:31:05] [ERROR] [logger] 這是 ERROR 訊息
+[2025-10-20 20:31:05] [ERROR] [logger] 發生錯誤
+Traceback (most recent call last):
+  File "/Users/sabrina/Documents/housemate-finder-app/claude_scraper/src/logger.py", line 184, in <module>
+    result = 1 / 0
+ZeroDivisionError: division by zero

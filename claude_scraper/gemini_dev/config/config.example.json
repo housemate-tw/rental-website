@@ -1,0 +1,27 @@
+{
+  "facebook": {
+    "group_url": "https://www.facebook.com/groups/YOUR_GROUP_ID",
+    "login_method": "cookies",
+    "cookies_path": "config/auth.json",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+  },
+  "scraper": {
+    "max_posts_per_run": 500,
+    "scroll_delay": [1.5, 3.0],
+    "reading_delay": [0.5, 1.5],
+    "max_retries": 3,
+    "retry_delay": 2,
+    "headless": false
+  },
+  "paths": {
+    "save_script": "/Users/sabrina/Documents/rental_project/save_rental_v8.py",
+    "data_dir": "/Users/sabrina/Documents/data_v8",
+    "state_file": "state/scraper_state.json",
+    "log_dir": "logs/"
+  },
+  "monitoring": {
+    "enable_progress_bar": true,
+    "log_level": "INFO",
+    "performance_tracking": true
+  }
+}

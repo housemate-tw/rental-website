@@ -1,0 +1,38 @@
+[2025-10-23 11:56:29] [INFO] [logger] ============================================================
+[2025-10-23 11:56:29] [INFO] [logger] Logger initialized
+[2025-10-23 11:56:29] [INFO] [logger] Main log: /Users/sabrina/Documents/housemate-finder-app/claude_scraper/gemini_dev/logs/scraper_20251023.log
+[2025-10-23 11:56:29] [INFO] [logger] Error log: /Users/sabrina/Documents/housemate-finder-app/claude_scraper/gemini_dev/logs/error_20251023.log
+[2025-10-23 11:56:29] [INFO] [logger] ============================================================
+[2025-10-23 11:56:29] [INFO] [logger] ============================================================
+[2025-10-23 11:56:29] [INFO] [logger] Gemini Scraper Initialization
+[2025-10-23 11:56:29] [INFO] [logger] ============================================================
+[2025-10-23 11:56:29] [INFO] [logger] Configuration loaded successfully.
+[2025-10-23 11:56:29] [INFO] [logger] Target Group URL: https://www.facebook.com/groups/2391145197642950
+[2025-10-23 11:56:29] [INFO] [logger] Data directory: data/
+[2025-10-23 11:56:29] [INFO] [logger] Initialization complete.
+[2025-10-23 14:00:32] [INFO] [logger] ============================================================
+[2025-10-23 14:00:32] [INFO] [logger] Logger initialized
+[2025-10-23 14:00:32] [INFO] [logger] Main log: /Users/sabrina/Documents/housemate-finder-app/claude_scraper/gemini_dev/logs/scraper_20251023.log
+[2025-10-23 14:00:32] [INFO] [logger] Error log: /Users/sabrina/Documents/housemate-finder-app/claude_scraper/gemini_dev/logs/error_20251023.log
+[2025-10-23 14:00:32] [INFO] [logger] ============================================================
+[2025-10-23 14:00:32] [INFO] [logger] ============================================================
+[2025-10-23 14:00:32] [INFO] [logger] Gemini Scraper Processor Initialization
+[2025-10-23 14:00:32] [INFO] [logger] ============================================================
+[2025-10-23 14:00:32] [INFO] [logger] Configuration loaded successfully.
+[2025-10-23 14:00:32] [INFO] [logger] Initialization complete.
+[2025-10-23 14:00:32] [INFO] [logger] ============================================================
+[2025-10-23 14:00:32] [INFO] [logger] Loading Snapshot
+[2025-10-23 14:00:32] [INFO] [logger] ============================================================
+[2025-10-23 14:00:32] [ERROR] [logger] Failed to parse snapshot JSON: Invalid control character at: line 1 column 11363 (char 11362)
+Traceback (most recent call last):
+  File "/Users/sabrina/Documents/housemate-finder-app/claude_scraper/gemini_dev/scraper.py", line 86, in main
+    snapshot_data = json.load(f)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/json/__init__.py", line 293, in load
+    return loads(fp.read(),
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/json/decoder.py", line 353, in raw_decode
+    obj, end = self.scan_once(s, idx)
+json.decoder.JSONDecodeError: Invalid control character at: line 1 column 11363 (char 11362)
